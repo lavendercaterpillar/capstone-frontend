@@ -1,0 +1,86 @@
+/* Ensure full height across devices */
+html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/* Top-level layout */
+.input-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Header bar */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #f6f6f6;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    color: black;
+    font-weight: bold;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    margin-left: 2rem;
+}
+
+/* Style individual buttons */
+.nav-buttons button {
+    flex: 1;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Main two-column layout */
+.main-content {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* or any value that gives the panels room */
+}
+
+/* Left: input form */
+.input-panel {
+    flex: 1 1 100%;
+    padding: 1rem;
+    border-right: none;
+    background-color: #ddd;
+}
+
+/* Right: output panel */
+.output-panel {
+    flex: 1 1 100%;
+    padding: 1rem;
+    background-color: #ddd;
+}
+
+/* Two-column layout for larger screens */
+@media (min-width: 768px) {
+    .input-panel {
+        flex: 1 1 33.33%;
+        border-right: 1px solid #ddd;
+    }
+
+    .output-panel {
+        flex: 2 1 66.66%;
+    }
+}
