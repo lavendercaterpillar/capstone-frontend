@@ -18,14 +18,29 @@ const InputPage = () => {
             <main className="main-content">
                 {/* LEFT: Input Form */}
                 <section className="input-panel">
-                    <h2>Enter Project Details</h2>
-                    {/* Form fields will go here */}
+                    <div className="panel-inner-box">
+                        <p className="location-title">Project Location Input:</p>
+                            <div className="location-input-container">
+                                <div className="location-inner-box">
+                                {/* Optional: inner content */}
+                                </div>
+                            </div>
+
+                        <p className="room-title">Space/Room Input:</p>
+                            <div className="room-input-container">
+                                <div className="room-inner-box">
+                                {/* Optional: inner content */}
+                                </div>
+                            </div>
+                    </div>                            
                 </section>
 
                 {/* RIGHT: Output Display */}
                 <section className="output-panel">
-                    <h2>Results</h2>
-                    {/* Output display will go here */}
+                    <div className="panel-inner-box">
+                        <h3>Results</h3>
+                        {/* Output display will go here */}
+                    </div>
                 </section>
             </main>
         </div>
