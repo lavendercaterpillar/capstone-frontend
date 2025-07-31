@@ -1,229 +1,226 @@
 /* GLOBAL RESET + BOX MODEL */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* Ensure full height across devices */
 html,
 body,
 #root {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 
 /* Top-level layout */
 /* FLEX CONTAINER */
 .input-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* width: 100%; */
 }
-
-/* Header bar */
-
 
 /* Main two-column layout */
 .main-content {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
 }
 
 /* Two-column layout for larger screens */
 @media (min-width: 768px) {
-    .input-panel {
-        flex: 1 1 45%;
-        max-width: 45%;
-        border-right: 1px solid #ddd;
-    }
+  .input-panel {
+    flex: 1 1 45%;
+    max-width: 45%;
+    border-right: 1px solid #ddd;
+  }
 
-    .output-panel {
-        flex: 1 1 55%;
-        max-width: 55%;
-    }
+  .output-panel {
+    flex: 1 1 55%;
+    max-width: 55%;
+  }
 }
 
 /* Left: input form */
 .input-panel {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    flex: 1 1 100%;
-    padding: 1rem;
-    border-right: none;
-    background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex: 1 1 100%;
+  padding: 1rem;
+  border-right: none;
+  background-color: white;
 }
 
 .location-input-container {
-    background-color: white;
-    /* 1/4 of the input-panel or more */
-    height: 30%;
-    padding: 0.5rem 0.75rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  background-color: white;
+  /* 1/4 of the input-panel or more */
+  height: 30%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .location-title {
-    color: rgb(130, 130, 130);
-    font-size: 0.9rem;
-    text-align: left;
-    /* margin for h3 in input panel */
-    margin: 0.25rem 0;
-    padding: 0;
-    font-size: 1.1rem;
+  color: rgb(130, 130, 130);
+  font-size: 0.9rem;
+  text-align: left;
+  /* margin for h3 in input panel */
+  margin: 0.25rem 0;
+  padding: 0;
+  font-size: 1.1rem;
 }
 
 .location-inner-box {
-    flex: 1;
-    background-color: white;
-    border-radius: 4px;
-    padding: 0.5rem;
-    align-items: flex-start;
+  flex: 1;
+  background-color: white;
+  border-radius: 4px;
+  padding: 0.5rem;
+  align-items: flex-start;
 }
 
 .room-input-container {
-    background-color: white;
-    height: 55%;
-    padding: 0.5rem 0.75rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    flex-direction: column;
+  background-color: white;
+  height: 55%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .room-title {
-    color: rgb(130, 130, 130);
-    font-size: 0.9rem;
-    text-align: left;
-    margin: 0.25rem 0;
-    padding: 0;
-    font-size: 1.1rem;
+  color: rgb(130, 130, 130);
+  font-size: 0.9rem;
+  text-align: left;
+  margin: 0.25rem 0;
+  padding: 0;
+  font-size: 1.1rem;
 }
 
 .room-inner-box {
-    flex: 1;
-    background-color: white;
-    border-radius: 4px;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    /* Ensures left alignment */
-    align-items: flex-start;
-    /* Optional: space between label and input */
-    gap: 0.5rem;
-    width: 100%;
+  flex: 1;
+  background-color: white;
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  /* Ensures left alignment */
+  align-items: flex-start;
+  /* Optional: space between label and input */
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .room-input-label {
-    font-weight: 500;
-    color: black;
-    display: block;
-    margin-bottom: 0.25rem;
-    /* Keep this to add space between label and input */
+  font-weight: 500;
+  color: black;
+  display: block;
+  margin-bottom: 0.25rem;
+  /* Keep this to add space between label and input */
 }
 
 .room-text-input {
-    width: 100%;
-    padding: 0.4rem 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #ddd;
-    font-size: 0.9rem;
-    color: black;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ddd;
+  font-size: 0.9rem;
+  color: black;
+  box-sizing: border-box;
 }
 
 .wall-section-title {
-    color: black;
-    /* font-weight: 1.1rem; */
-    font-size: 0.9rem;
-    text-align: left;
-    /* margin-top: 1rem; */
-    margin-bottom: 0.3rem;
-    padding: 0;
+  color: black;
+  /* font-weight: 1.1rem; */
+  font-size: 0.9rem;
+  text-align: left;
+  /* margin-top: 1rem; */
+  margin-bottom: 0.3rem;
+  padding: 0;
 }
 
 .wall-row {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
 }
 
 /* Each label-input pair */
 .wall-input-pair {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    flex: 1;
-    min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 200px;
 }
 
 .wall-input-label {
-    color: black;
-    font-size: 1rem;
-    white-space: nowrap;
+  color: black;
+  font-size: 1rem;
+  white-space: nowrap;
 }
 
 .wall-text-input {
-    background-color: #ddd;
-    color: black;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 0.3rem 0.5rem;
-    font-size: 0.9rem;
-    width: 100px;
-    /* fixed narrower input */
-    box-sizing: border-box;
+  background-color: #ddd;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+  width: 100px;
+  /* fixed narrower input */
+  box-sizing: border-box;
 }
 
 
 /* Add hover/focus styles */
 .room-text-input:focus {
-    border-color: #888;
-    outline: none;
-    background-color: #eee;
+  border-color: #888;
+  outline: none;
+  background-color: #eee;
 }
 
 /* Submit Button */
 .submit-button {
-    align-self: flex-end;
-    /* aligns button to the right end inside flex column */
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background-color: #0077cc;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    margin-top: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  align-self: flex-end;
+  /* aligns button to the right end inside flex column */
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .submit-button:hover {
-    background-color: #005fa3;
+  background-color: #005fa3;
 }
 
 
 /* Right: output panel */
 .output-panel {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: white;
 }
 
 /* Panel gray inner box */
 .panel-inner-box {
-    background-color: #ddd;
-    border-radius: 6px;
-    padding: 1rem;
-    height: 100%;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+  background-color: #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  height: 100%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
 }
