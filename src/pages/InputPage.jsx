@@ -22,14 +22,14 @@ const InputPage = () => {
                         <p className="location-title">Project Location Input:</p>
                         <div className="location-input-container">
                             <div className="location-inner-box">
-                            {/* Optional: inner content */}
+                            
                                 <label htmlFor="country" className="room-input-label">Country:</label>
                                         <input
                                         type="text"
                                         id="country"
                                         name="country"
                                         // className="room-text-input"
-                                        class="room-text-input"
+                                        className="room-text-input"
                                         placeholder="Enter project country"
                                     />
 
@@ -38,8 +38,8 @@ const InputPage = () => {
                                         type="text"
                                         id="state"
                                         name="state"
-                                        // className="room-text-input"
-                                        class="room-text-input"
+                                        className="room-text-input"
+                                        // class="room-text-input"
                                         placeholder="Enter project state"
                                     />
                                     
@@ -48,8 +48,8 @@ const InputPage = () => {
                                         type="text"
                                         id="city"
                                         name="city"
-                                        // className="room-text-input"
-                                        class="room-text-input"
+                                        className="room-text-input"
+                                        // class="room-text-input"
                                         placeholder="Enter project city"
                                     />
                             </div>
@@ -64,8 +64,8 @@ const InputPage = () => {
                                     type="text"
                                     id="projectName"
                                     name="projectName"
-                                    // className="room-text-input"
-                                    class="room-text-input"
+                                    className="room-text-input"
+                                    // class="room-text-input"
                                     placeholder="Enter project name"
                                 />
 
@@ -74,8 +74,8 @@ const InputPage = () => {
                                     type="text"
                                     id="floorArea"
                                     name="floorArea"
-                                    // className="room-text-input"
-                                    class="room-text-input"
+                                    className="room-text-input"
+                                    // class="room-text-input"
                                     placeholder="Enter project name"
                                 />
 
@@ -182,7 +182,8 @@ const InputPage = () => {
 
                             </div>
                         </div>
-                    </div>                            
+                    </div>
+                    <button className="submit-button">OK</button>                            
                 </section>
 
                 {/* RIGHT: Output Display */}
