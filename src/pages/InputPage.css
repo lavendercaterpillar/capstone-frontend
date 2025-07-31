@@ -2,6 +2,7 @@
 * {
     box-sizing: border-box;
 }
+
 /* Ensure full height across devices */
 html,
 body,
@@ -35,15 +36,19 @@ body,
 
 .logo {
     color: black;
-    font-size: 1.0rem;
-    padding: 0; /* top/bottom: 0.25rem, left/right: 0.5rem */
-    line-height: 1;         /* Remove vertical spacing */
+    font-size: 1rem;
+    padding: 0;
+    /* top/bottom: 0.25rem, left/right: 0.5rem */
+    line-height: 1;
+    /* Remove vertical spacing */
     /* flex-shrink: 0; */
     overflow: hidden;
     text-overflow: ellipsis;
     display: flex;
-    align-items: center;    /* Vertical alignment */
-    height: 100%;           /* Match header height */
+    align-items: center;
+    /* Vertical alignment */
+    height: 100%;
+    /* Match header height */
 }
 
 /* Navigation buttons */
@@ -70,6 +75,20 @@ body,
     flex: 1;
 }
 
+/* Two-column layout for larger screens */
+@media (min-width: 768px) {
+    .input-panel {
+        flex: 1 1 45%;
+        max-width: 45%;
+        border-right: 1px solid #ddd;
+    }
+
+    .output-panel {
+        flex: 1 1 55%;
+        max-width: 55%;
+    }
+}
+
 /* Left: input form */
 .input-panel {
     display: flex;
@@ -83,16 +102,19 @@ body,
 
 .location-input-container {
     background-color: white;
-    height: 30%; /* 1/4 of the input-panel or more */
-    padding: 0.5rem 0.75rem; 
+    /* 1/4 of the input-panel or more */
+    height: 30%;
+    padding: 0.5rem 0.75rem;
     margin-bottom: 0.5rem;
     display: flex;
     flex-direction: column;
-}
+    gap: 0.5rem; 
+} 
+
 
 .location-title {
     color: rgb(130, 130, 130);
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     text-align: left;
     /* margin for h3 in input panel */
     margin: 0.25rem 0;
@@ -105,12 +127,13 @@ body,
     background-color: white;
     border-radius: 4px;
     padding: 0.5rem;
+    align-items: flex-start;
 }
 
 .room-input-container {
     background-color: white;
-    height: 55%; 
-    padding: 0.5rem 0.75rem; 
+    height: 55%;
+    padding: 0.5rem 0.75rem;
     margin-bottom: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -118,7 +141,7 @@ body,
 
 .room-title {
     color: rgb(130, 130, 130);
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     text-align: left;
     margin: 0.25rem 0;
     padding: 0;
@@ -130,6 +153,84 @@ body,
     background-color: white;
     border-radius: 4px;
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    /* Ensures left alignment */
+    align-items: flex-start;
+    /* Optional: space between label and input */
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.room-input-label {
+    font-weight: 500;
+    color: black;
+    display: block;
+    margin-bottom: 0.25rem;
+    /* Keep this to add space between label and input */
+}
+
+.room-text-input {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ddd;
+    font-size: 0.9rem;
+    color: black;
+    box-sizing: border-box;
+}
+
+.wall-section-title {
+    color: black;
+    /* font-weight: 1.1rem; */
+    font-size: 0.9rem;
+    text-align: left;
+    /* margin-top: 1rem; */
+    margin-bottom: 0.3rem;
+    padding: 0;
+}
+
+.wall-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+}
+
+/* Each label-input pair */
+.wall-input-pair {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 200px;
+}
+
+.wall-input-label {
+    color: black;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.wall-text-input {
+    background-color: #ddd;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.9rem;
+    width: 100px;     /* fixed narrower input */
+    box-sizing: border-box;
+}
+
+
+/* Add hover/focus styles */
+.room-text-input:focus {
+    border-color: #888;
+    outline: none;
+    background-color: #eee;
 }
 
 /* Right: output panel */
@@ -147,17 +248,4 @@ body,
     padding: 1rem;
     height: 100%;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
-}
-
-/* Two-column layout for larger screens */
-@media (min-width: 768px) {
-    .input-panel {
-        flex: 1 1 33.33%;
-        border-right: 1px solid #ddd;
-    }
-
-    .output-panel {
-        flex: 2 1 66.66%;
-    }
-
 }
