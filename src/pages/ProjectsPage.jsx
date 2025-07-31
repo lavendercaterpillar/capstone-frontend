@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header'; // Adjust path if needed
 
 const ProjectsPage = () => {
   return (
     <div className="input-page">
-      <header className="header">
-        <div className="logo">API LOGO</div>
-        <nav className="nav-buttons">
-          <Link to="/">Input</Link>
-        </nav>
-      </header>
+      <Header />
 
       <main className="main-content">
         <section className="output-panel">
