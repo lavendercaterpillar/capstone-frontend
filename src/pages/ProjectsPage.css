@@ -40,6 +40,14 @@
   color: #222;
 }
 
+/* Ensure this rule wins over other table styles */
+.projects-table tr.selected-row {
+  background-color: #cce5ff !important;
+  /* light blue highlight */
+  font-weight: bold;
+}
+
+
 /* Main content area padding */
 .projects-content {
   padding: 1.5rem 2rem;

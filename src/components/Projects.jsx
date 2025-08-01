@@ -1,26 +1,7 @@
 import React from 'react';
-import './Projects.css'; // Create a CSS file for styling table if needed
+import './Projects.css';
 
-const Projects = () => {
-  const mockProjects = [
-    {
-      id: 1,
-      projectName: 'Capstone House',
-      location: 'Atlanta',
-      area: 120.5,
-      coolingLoad: null,
-      heatingLoad: null,
-    },
-    {
-      id: 2,
-      projectName: 'Sunny Villa',
-      location: 'San Diego',
-      area: 200,
-      coolingLoad: null,
-      heatingLoad: null,
-    },
-  ];
-
+const Projects = ({ projects, selectedProjectId, onSelect }) => {
   return (
     <div className="projects-table-container">
       <table className="projects-table">
@@ -34,17 +15,17 @@ const Projects = () => {
           </tr>
         </thead>
         <tbody>
-          {mockProjects.map((project) => (
-            <tr key={project.id}>
+          {projects.map((project) => (
+            <tr
+              key={project.id}
+              onClick={() => onSelect(project.id)}
+              className={selectedProjectId === project.id ? 'selected-row' : ''}
+            >
               <td>{project.projectName}</td>
               <td>{project.location}</td>
               <td>{project.area}</td>
-              <td>
-                {project.coolingLoad !== null ? project.coolingLoad : '-'}
-              </td>
-              <td>
-                {project.heatingLoad !== null ? project.heatingLoad : '-'}
-              </td>
+              <td>{project.coolingLoad ?? '-'}</td>
+              <td>{project.heatingLoad ?? '-'}</td>
             </tr>
           ))}
         </tbody>
