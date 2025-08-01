@@ -1,54 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header'; // Adjust path if needed
 import Projects from '../components/Projects';
 import './ProjectsPage.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:8080';
 
 const ProjectsPage = () => {
+  const [projects, setProjects] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const navigate = useNavigate();
+  const selectedProject = projects.find((p) => p.id === selectedProjectId);
 
-  const mockProjects = [
-    {
-      id: 1,
-      projectName: 'Capstone House',
-      location: 'Atlanta',
-      area: 120.5,
-      northWallArea: 30.0,
-      northWindowCount: 2,
-      southWallArea: 30.0,
-      southWindowCount: 1,
-      eastWallArea: 25.0,
-      eastWindowCount: 2,
-      westWallArea: 35.5,
-      westWindowCount: 3,
-      coolingLoad: null,
-      heatingLoad: null,
-    },
-    {
-      id: 2,
-      projectName: 'Sunny Villa',
-      location: 'San Diego',
-      area: 200,
-      northWallArea: 40.0,
-      northWindowCount: 4,
-      southWallArea: 50.0,
-      southWindowCount: 2,
-      eastWallArea: 60.0,
-      eastWindowCount: 3,
-      westWallArea: 50.0,
-      westWindowCount: 1,
-      coolingLoad: null,
-      heatingLoad: null,
-    },
-  ];
+  // Fetch projects from backend
+  // useEffect(() => {
+  //   axios
+  //     .get(`${API_BASE_URL}/api/projects`)
+  //     .then((response) => {
+  //       setProjects(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching projects:', error);
+  //     });
+  // }, []);
 
-  const selectedProject = mockProjects.find((p) => p.id === selectedProjectId);
+  // Fetch projects on mount
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/projects`);
+      setProjects(res.data);
+    } catch (err) {
+      console.error('Error fetching projects:', err);
+    }
+  };
 
   const handleSelect = () => {
+    const selectedProject = projects.find((p) => p.id === selectedProjectId);
     if (selectedProject) {
       navigate('/', { state: { project: selectedProject } });
+    }
+  };
+
+  const handleDelete = async () => {
+    const projectToDelete = projects.find((p) => p.id === selectedProjectId);
+    if (!projectToDelete) return;
+
+    try {
+      await axios.delete(`${API_BASE_URL}/api/projects/${projectToDelete.id}`);
+      // Remove from local state after delete
+      setProjects(projects.filter((p) => p.id !== projectToDelete.id));
+      setSelectedProjectId(null);
+    } catch (err) {
+      console.error('Delete failed:', err);
     }
   };
 
@@ -66,7 +75,8 @@ const ProjectsPage = () => {
 
       <main className="projects-content">
         <Projects
-          projects={mockProjects}
+          // projects={mockProjects}
+          projects={projects}
           selectedProjectId={selectedProjectId}
           onSelect={setSelectedProjectId}
         />
@@ -86,18 +96,13 @@ const ProjectsPage = () => {
           SELECT
         </button>
 
-        <button
-          onClick={() => {
-            if (selectedProject) {
-              navigate('/', { state: { project: selectedProject } });
-            }
-          }}
-          disabled={!selectedProject}
-        >
+        <button onClick={handleSelect} disabled={!selectedProjectId}>
           EDIT
         </button>
 
-        <button>DELETE</button>
+        <button onClick={handleDelete} disabled={!selectedProjectId}>
+          DELETE
+        </button>
 
         <button onClick={() => setShowSearch(true)}>SEARCH</button>
       </div>

@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import './InputPage.css';
 import Header from '../components/Header'; // Adjust path if needed
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:8080';
 
 const InputPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const selectedProject = location.state?.project; // From useLocation()
 
   const [projectName, setProjectName] = useState('');
@@ -20,6 +24,7 @@ const InputPage = () => {
   const [westWallArea, setWestWallArea] = useState('');
   const [westWindowCount, setWestWindowCount] = useState('');
 
+  // Pre-populate form if editing
   useEffect(() => {
     if (selectedProject) {
       setProjectName(selectedProject.projectName || '');
@@ -36,9 +41,8 @@ const InputPage = () => {
     }
   }, [selectedProject]);
 
-  const handleSubmit = () => {
-    const updatedProject = {
-      id: selectedProject?.id || Date.now(), // use real ID later
+  const handleSubmit = async () => {
+    const projectData = {
       projectName,
       location: city,
       area: parseFloat(floorArea),
@@ -54,15 +58,25 @@ const InputPage = () => {
       heatingLoad: null,
     };
 
-    if (selectedProject) {
-      console.log('Updating existing project:', updatedProject);
-      // Later: send PUT to backend
-    } else {
-      console.log('Creating new project:', updatedProject);
-      // Later: send POST to backend
-    }
+    try {
+      if (selectedProject?.id) {
+        // Update existing project
+        await axios.put(`${API_BASE_URL}/api/projects/${selectedProject.id}`, {
+          id: selectedProject.id,
+          ...projectData,
+        });
+        console.log('Updated project:', projectData);
+      } else {
+        // Create new project
+        await axios.post(`${API_BASE_URL}/api/projects`, projectData);
+        console.log('Created new project:', projectData);
+      }
 
-    // Optional: Navigate back to /projects or show success
+      // Navigate back to ProjectsPage and trigger refresh
+      navigate('/projects', { state: { refresh: true } });
+    } catch (err) {
+      console.error('Submit failed:', err);
+    }
   };
 
   return (
