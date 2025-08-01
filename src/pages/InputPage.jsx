@@ -1,9 +1,70 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import './InputPage.css';
 import Header from '../components/Header'; // Adjust path if needed
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const InputPage = () => {
+  const location = useLocation();
+  const selectedProject = location.state?.project; // From useLocation()
+
+  const [projectName, setProjectName] = useState('');
+  const [city, setCity] = useState('');
+  const [floorArea, setFloorArea] = useState('');
+  const [northWallArea, setNorthWallArea] = useState('');
+  const [northWindowCount, setNorthWindowCount] = useState('');
+  const [southWallArea, setSouthWallArea] = useState('');
+  const [southWindowCount, setSouthWindowCount] = useState('');
+  const [eastWallArea, setEastWallArea] = useState('');
+  const [eastWindowCount, setEastWindowCount] = useState('');
+  const [westWallArea, setWestWallArea] = useState('');
+  const [westWindowCount, setWestWindowCount] = useState('');
+
+  useEffect(() => {
+    if (selectedProject) {
+      setProjectName(selectedProject.projectName || '');
+      setCity(selectedProject.location || '');
+      setFloorArea(selectedProject.area || '');
+      setNorthWallArea(selectedProject.northWallArea || '');
+      setNorthWindowCount(selectedProject.northWindowCount || '');
+      setSouthWallArea(selectedProject.southWallArea || '');
+      setSouthWindowCount(selectedProject.southWindowCount || '');
+      setEastWallArea(selectedProject.eastWallArea || '');
+      setEastWindowCount(selectedProject.eastWindowCount || '');
+      setWestWallArea(selectedProject.westWallArea || '');
+      setWestWindowCount(selectedProject.westWindowCount || '');
+    }
+  }, [selectedProject]);
+
+  const handleSubmit = () => {
+    const updatedProject = {
+      id: selectedProject?.id || Date.now(), // use real ID later
+      projectName,
+      location: city,
+      area: parseFloat(floorArea),
+      northWallArea: parseFloat(northWallArea),
+      northWindowCount: parseInt(northWindowCount),
+      southWallArea: parseFloat(southWallArea),
+      southWindowCount: parseInt(southWindowCount),
+      eastWallArea: parseFloat(eastWallArea),
+      eastWindowCount: parseInt(eastWindowCount),
+      westWallArea: parseFloat(westWallArea),
+      westWindowCount: parseInt(westWindowCount),
+      coolingLoad: null,
+      heatingLoad: null,
+    };
+
+    if (selectedProject) {
+      console.log('Updating existing project:', updatedProject);
+      // Later: send PUT to backend
+    } else {
+      console.log('Creating new project:', updatedProject);
+      // Later: send POST to backend
+    }
+
+    // Optional: Navigate back to /projects or show success
+  };
+
   return (
     <div className="input-page">
       <Header />
@@ -23,7 +84,6 @@ const InputPage = () => {
                   type="text"
                   id="country"
                   name="country"
-                  // className="room-text-input"
                   className="room-text-input"
                   placeholder="Enter project country"
                 />
@@ -36,7 +96,6 @@ const InputPage = () => {
                   id="state"
                   name="state"
                   className="room-text-input"
-                  // class="room-text-input"
                   placeholder="Enter project state"
                 />
 
@@ -48,8 +107,9 @@ const InputPage = () => {
                   id="city"
                   name="city"
                   className="room-text-input"
-                  // class="room-text-input"
                   placeholder="Enter project city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                 />
               </div>
             </div>
@@ -65,8 +125,9 @@ const InputPage = () => {
                   id="projectName"
                   name="projectName"
                   className="room-text-input"
-                  // class="room-text-input"
                   placeholder="Enter project name"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
                 />
 
                 <label htmlFor="floorArea" className="room-input-label">
@@ -77,8 +138,9 @@ const InputPage = () => {
                   id="floorArea"
                   name="floorArea"
                   className="room-text-input"
-                  // class="room-text-input"
                   placeholder="Enter project name"
+                  value={floorArea}
+                  onChange={(e) => setFloorArea(e.target.value)}
                 />
 
                 <label className="wall-section-title">North wall:</label>
@@ -93,6 +155,8 @@ const InputPage = () => {
                       name="northWallArea"
                       className="wall-text-input"
                       placeholder="e.g. 12"
+                      value={northWallArea}
+                      onChange={(e) => setNorthWallArea(e.target.value)}
                     />
                   </div>
 
@@ -109,6 +173,8 @@ const InputPage = () => {
                       name="northWindowCount"
                       className="wall-text-input"
                       placeholder="e.g. 2"
+                      value={northWindowCount}
+                      onChange={(e) => setNorthWindowCount(e.target.value)}
                     />
                   </div>
                 </div>
@@ -125,6 +191,8 @@ const InputPage = () => {
                       name="southWallArea"
                       className="wall-text-input"
                       placeholder="e.g. 10"
+                      value={southWallArea}
+                      onChange={(e) => setSouthWallArea(e.target.value)}
                     />
                   </div>
 
@@ -141,6 +209,8 @@ const InputPage = () => {
                       name="southWindowCount"
                       className="wall-text-input"
                       placeholder="e.g. 1"
+                      value={southWindowCount}
+                      onChange={(e) => setSouthWindowCount(e.target.value)}
                     />
                   </div>
                 </div>
@@ -157,6 +227,8 @@ const InputPage = () => {
                       name="eastWallArea"
                       className="wall-text-input"
                       placeholder="e.g. 11"
+                      value={eastWallArea}
+                      onChange={(e) => setEastWallArea(e.target.value)}
                     />
                   </div>
 
@@ -173,6 +245,8 @@ const InputPage = () => {
                       name="eastWindowCount"
                       className="wall-text-input"
                       placeholder="e.g. 3"
+                      value={eastWindowCount}
+                      onChange={(e) => setEastWindowCount(e.target.value)}
                     />
                   </div>
                 </div>
@@ -189,6 +263,8 @@ const InputPage = () => {
                       name="westWallArea"
                       className="wall-text-input"
                       placeholder="e.g. 9"
+                      value={westWallArea}
+                      onChange={(e) => setWestWallArea(e.target.value)}
                     />
                   </div>
 
@@ -205,13 +281,17 @@ const InputPage = () => {
                       name="westWindowCount"
                       className="wall-text-input"
                       placeholder="e.g. 0"
+                      value={westWindowCount}
+                      onChange={(e) => setWestWindowCount(e.target.value)}
                     />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <button className="submit-button">OK</button>
+          <button className="submit-button" onClick={handleSubmit}>
+            OK
+          </button>{' '}
         </section>
 
         {/* RIGHT: Output Display */}

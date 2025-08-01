@@ -85,8 +85,20 @@ const ProjectsPage = () => {
         <button onClick={handleSelect} disabled={!selectedProject}>
           SELECT
         </button>
-        <button onClick={() => navigate('/')}>EDIT</button>
+
+        <button
+          onClick={() => {
+            if (selectedProject) {
+              navigate('/', { state: { project: selectedProject } });
+            }
+          }}
+          disabled={!selectedProject}
+        >
+          EDIT
+        </button>
+
         <button>DELETE</button>
+
         <button onClick={() => setShowSearch(true)}>SEARCH</button>
       </div>
     </div>
