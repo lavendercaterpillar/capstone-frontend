@@ -2,16 +2,21 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header'; // Adjust path if needed
 import Projects from '../components/Projects';
 import './ProjectsPage.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8080';
+
+const location = useLocation();
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
   const navigate = useNavigate();
+
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
 
   // Fetch projects from backend
@@ -27,9 +32,11 @@ const ProjectsPage = () => {
   // }, []);
 
   // Fetch projects on mount
+  // Always run when navigation occurs or user triggers refresh
+  // location.key changes every time you navigate here
   useEffect(() => {
     fetchProjects();
-  }, []);
+  }, [location.key]);
 
   const fetchProjects = async () => {
     try {
@@ -37,6 +44,22 @@ const ProjectsPage = () => {
       setProjects(res.data);
     } catch (err) {
       console.error('Error fetching projects:', err);
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/projects`, {
+        params: {
+          projectName: searchTerm,
+        },
+      });
+      setProjects(res.data);
+      setShowSearch(false); // close popup after search
+      setSelectedProjectId(null); // clear any selection
+    } catch (err) {
+      console.error('Search failed:', err);
+      alert('No matching projects found.');
     }
   };
 
@@ -85,8 +108,14 @@ const ProjectsPage = () => {
       {/* Search input popup */}
       {showSearch && (
         <div className="search-popup">
-          <input type="text" placeholder="Search by project name..." />
-          <button onClick={() => setShowSearch(false)}>Close</button>
+          <input
+            type="text"
+            placeholder="Search by project name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+          <button onClick={() => setShowSearch(false)}>Cancel</button>
         </div>
       )}
 
