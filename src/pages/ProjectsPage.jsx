@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header'; // Adjust path if needed
 import Projects from '../components/Projects';
 import './ProjectsPage.css';
@@ -7,14 +7,13 @@ import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8080';
 
-const location = useLocation();
-
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
