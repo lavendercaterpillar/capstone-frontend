@@ -18,18 +18,6 @@ const ProjectsPage = () => {
 
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
 
-  // Fetch projects from backend
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_BASE_URL}/api/projects`)
-  //     .then((response) => {
-  //       setProjects(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching projects:', error);
-  //     });
-  // }, []);
-
   // Fetch projects on mount
   // Always run when navigation occurs or user triggers refresh
   // location.key changes every time you navigate here
