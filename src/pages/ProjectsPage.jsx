@@ -5,7 +5,8 @@ import './ProjectsPage.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
+// const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://hvac-system-api.onrender.com';
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
