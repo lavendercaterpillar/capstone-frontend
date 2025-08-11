@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import Header from '../components/Header'; // Adjust path if needed
+import Header from '../components/Header';
 import Projects from '../components/Projects';
 import './ProjectsPage.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // const API_BASE_URL = 'http://localhost:8080';
-const API_BASE_URL = 'https://hvac-system-api.onrender.com';
 
 const ProjectsPage = () => {
   const [projects, setProjects] = useState([]);
@@ -19,21 +19,6 @@ const ProjectsPage = () => {
 
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
 
-  // Fetch projects from backend
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_BASE_URL}/api/projects`)
-  //     .then((response) => {
-  //       setProjects(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching projects:', error);
-  //     });
-  // }, []);
-
-  // Fetch projects on mount
-  // Always run when navigation occurs or user triggers refresh
-  // location.key changes every time you navigate here
   useEffect(() => {
     fetchProjects();
   }, [location.key]);
