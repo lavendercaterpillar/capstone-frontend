@@ -15,112 +15,26 @@ const InputPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const selectedProject = location.state?.project; // From useLocation()
-
-  const [currentProject, setCurrentProject] = useState(
-    location.state?.project || {
-      projectName: '',
-      location: '',
-      area: '',
-      northWallArea: '',
-      northWindowCount: '',
-      southWallArea: '',
-      southWindowCount: '',
-      eastWallArea: '',
-      eastWindowCount: '',
-      westWallArea: '',
-      westWindowCount: '',
-      weather: {
-        dryBulbTemp: '',
-        wetBulbTemp: '',
-      },
-    }
-  );
-
-  // State variables
-  const [projectName, setProjectName] = useState(currentProject.projectName);
-  const [city, setCity] = useState(currentProject.city);
-  const [floorArea, setFloorArea] = useState(currentProject.floorArea);
-  const [northWallArea, setNorthWallArea] = useState(
-    currentProject.northWallArea
-  );
-  const [northWindowCount, setNorthWindowCount] = useState(
-    currentProject.northWindowCount
-  );
-  const [southWallArea, setSouthWallArea] = useState(
-    currentProject.southWallArea
-  );
-  const [southWindowCount, setSouthWindowCount] = useState(
-    currentProject.southWindowCount
-  );
-  const [eastWallArea, setEastWallArea] = useState(currentProject.eastWallArea);
-  const [eastWindowCount, setEastWindowCount] = useState(
-    currentProject.eastWindowCount
-  );
-  const [westWallArea, setWestWallArea] = useState(currentProject.westWallArea);
-  const [westWindowCount, setWestWindowCount] = useState(
-    currentProject.westWindowCount
-  );
-  const [dryBulbTemp, setDryBulbTemp] = useState(currentProject.dryBulbTemp);
-  const [wetBulbTemp, setWetBulbTemp] = useState(currentProject.wetBulbTemp);
   const [showResults, setShowResults] = useState(false);
+
+  // Project state
+  const [projectName, setProjectName] = useState('');
+  const [city, setCity] = useState('');
+  const [floorArea, setFloorArea] = useState('');
+  const [northWallArea, setNorthWallArea] = useState('');
+  const [northWindowCount, setNorthWindowCount] = useState('');
+  const [southWallArea, setSouthWallArea] = useState('');
+  const [southWindowCount, setSouthWindowCount] = useState('');
+  const [eastWallArea, setEastWallArea] = useState('');
+  const [eastWindowCount, setEastWindowCount] = useState('');
+  const [westWallArea, setWestWallArea] = useState('');
+  const [westWindowCount, setWestWindowCount] = useState('');
+  const [dryBulbTemp, setDryBulbTemp] = useState('');
+  const [wetBulbTemp, setWetBulbTemp] = useState('');
   const [coolingLoad, setCoolingLoad] = useState(null);
   const [heatingLoad, setHeatingLoad] = useState(null);
 
-  // Fetch weather data when project is selected or city changes
-  useEffect(() => {
-    const fetchWeatherData = async () => {
-      if (selectedProject?.weather) {
-        // If we have a selected project with weather data
-        setDryBulbTemp(
-          selectedProject.weather.dryBulbTemp?.toFixed(1) || 'N/A'
-        );
-        setWetBulbTemp(
-          selectedProject.weather.wetBulbTemp?.toFixed(1) || 'N/A'
-        );
-      } else if (city) {
-        // If city changes but no project is selected (for new projects)
-        try {
-          const response = await axios.get(
-            `${API_BASE_URL}/api/weather/location/${encodeURIComponent(city)}`
-          );
-          if (response.data) {
-            setDryBulbTemp(response.data.dryBulbTemp?.toFixed(1) || 'N/A');
-            setWetBulbTemp(response.data.wetBulbTemp?.toFixed(1) || 'N/A');
-          }
-        } catch (error) {
-          console.error('Error fetching weather data:', error);
-          setDryBulbTemp('N/A');
-          setWetBulbTemp('N/A');
-        }
-      } else {
-        // Reset if no city/project
-        setDryBulbTemp('');
-        setWetBulbTemp('');
-      }
-    };
-
-    fetchWeatherData();
-  }, [selectedProject, city]);
-
-  const fetchWeatherForCity = async () => {
-    if (!city) return;
-
-    try {
-      const response = await axios.get(
-        `${API_BASE_URL}/api/weather/location/${encodeURIComponent(city)}`
-      );
-      if (response.data) {
-        setDryBulbTemp(response.data.dryBulbTemp?.toFixed(1) || 'N/A');
-        setWetBulbTemp(response.data.wetBulbTemp?.toFixed(1) || 'N/A');
-      }
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
-      setDryBulbTemp('N/A');
-      setWetBulbTemp('N/A');
-    }
-  };
-
-  // Pre-populate form if editing
+  // Populate form when editing
   useEffect(() => {
     if (selectedProject) {
       setProjectName(selectedProject.projectName || '');
@@ -134,15 +48,21 @@ const InputPage = () => {
       setEastWindowCount(selectedProject.eastWindowCount || '');
       setWestWallArea(selectedProject.westWallArea || '');
       setWestWindowCount(selectedProject.westWindowCount || '');
+
+      // Weather comes only from project data
+      if (selectedProject.weather) {
+        setDryBulbTemp(
+          selectedProject.weather.dryBulbTemp?.toFixed(1) || 'N/A'
+        );
+        setWetBulbTemp(
+          selectedProject.weather.wetBulbTemp?.toFixed(1) || 'N/A'
+        );
+      }
     }
   }, [selectedProject]);
 
-  // Handle Submit
+  // Handle form submit (no weather fetch for new projects)
   const handleSubmit = async () => {
-    // Fetch weather first
-    await fetchWeatherForCity();
-
-    // Then submit the form
     const projectData = {
       projectName,
       location: city,
@@ -169,23 +89,19 @@ const InputPage = () => {
         await axios.post(`${API_BASE_URL}/api/projects`, projectData);
       }
 
-      // Navigate with refresh flag
       navigate('/projects', {
         state: { refresh: true },
-        replace: true, // This prevents additional history entries
+        replace: true,
       });
     } catch (err) {
       console.error('Submit failed:', err);
     }
   };
 
-  const handleCalculate = async () => {
-    // Fetch weather first
-    await fetchWeatherForCity();
-
+  const handleCalculate = () => {
+    // Validate essential inputs first
     try {
-      // Validate essential inputs first
-      if (!currentProject.area || isNaN(parseFloat(currentProject.area))) {
+      if (!floorArea || isNaN(parseFloat(floorArea))) {
         throw new Error('Floor area must be a valid number');
       }
       if (!dryBulbTemp || isNaN(parseFloat(dryBulbTemp))) {
@@ -197,53 +113,29 @@ const InputPage = () => {
 
       // Prepare calculation inputs
       const calculationInputs = {
-        floorArea: currentProject.area,
-        dryBulbTemp,
-        wetBulbTemp,
-        northWallArea: currentProject.northWallArea || 0,
-        northWindowCount: currentProject.northWindowCount || 0,
-        southWallArea: currentProject.southWallArea || 0,
-        southWindowCount: currentProject.southWindowCount || 0,
-        eastWallArea: currentProject.eastWallArea || 0,
-        eastWindowCount: currentProject.eastWindowCount || 0,
-        westWallArea: currentProject.westWallArea || 0,
-        westWindowCount: currentProject.westWindowCount || 0,
+        floorArea: parseFloat(floorArea),
+        dryBulbTemp: parseFloat(dryBulbTemp),
+        wetBulbTemp: parseFloat(wetBulbTemp),
+        northWallArea: parseFloat(northWallArea) || 0,
+        northWindowCount: parseInt(northWindowCount) || 0,
+        southWallArea: parseFloat(southWallArea) || 0,
+        southWindowCount: parseInt(southWindowCount) || 0,
+        eastWallArea: parseFloat(eastWallArea) || 0,
+        eastWindowCount: parseInt(eastWindowCount) || 0,
+        westWallArea: parseFloat(westWallArea) || 0,
+        westWindowCount: parseInt(westWindowCount) || 0,
       };
-
-      console.log('Calculation inputs:', calculationInputs);
 
       // Perform calculation
       const results = calculateLoadsFromInputs(calculationInputs);
-      console.log('Calculation results:', results);
 
       // Update project state while preserving all existing fields
-      setCurrentProject((prev) => ({
-        ...prev, // Keep all existing project data
-        coolingLoad: results.cooling,
-        heatingLoad: results.heating,
-        weather: {
-          ...prev.weather, // Keep other weather data if exists
-          dryBulbTemp: parseFloat(dryBulbTemp),
-          wetBulbTemp: parseFloat(wetBulbTemp),
-          // Add calculated values if needed
-          coolingLoad: results.cooling,
-          heatingLoad: results.heating,
-        },
-      }));
-
       // Update display state
       setCoolingLoad(results.cooling);
       setHeatingLoad(results.heating);
       setShowResults(true);
     } catch (error) {
-      console.error('Calculation error:', {
-        error: error.message,
-        projectData: currentProject,
-        temperatures: { dryBulbTemp, wetBulbTemp },
-      });
-      alert(
-        `Calculation Error: ${error.message}\n\nPlease check:\n- Floor area is a valid number\n- Temperatures are provided\n- Wall areas are numbers`
-      );
+      alert(`Calculation Error: ${error.message}`);
     }
   };
 
@@ -267,7 +159,7 @@ const InputPage = () => {
                   id="Drybulb"
                   name="Drybulb"
                   className="room-text-input"
-                  placeholder="Select a project or enter city"
+                  placeholder="Select a project"
                   value={dryBulbTemp}
                   readOnly
                 />
@@ -280,7 +172,7 @@ const InputPage = () => {
                   id="Wetbulb"
                   name="Wetbulb"
                   className="room-text-input"
-                  placeholder="Select a project or enter city"
+                  placeholder="Select a project"
                   value={wetBulbTemp}
                   readOnly
                 />
