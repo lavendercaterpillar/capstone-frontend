@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import capstone1 from '../assets/capstone1.webp';
+import capstone1 from '../assets/Capstone1.jpg';
 import capstone2 from '../assets/capstone2.jpg';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -14,8 +14,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const InputPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const selectedProject = location.state?.project; // From useLocation()
   const [showResults, setShowResults] = useState(false);
+
+  const selectedProject = location.state?.project; // From useLocation()
 
   // Project state
   const [projectName, setProjectName] = useState('');
