@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import capstone1 from '../assets/capstone1.webp';
+import capstone2 from '../assets/capstone2.jpg';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // const API_BASE_URL = 'http://localhost:8080';
@@ -100,6 +102,24 @@ const InputPage = () => {
     fetchWeatherData();
   }, [selectedProject, city]);
 
+  const fetchWeatherForCity = async () => {
+    if (!city) return;
+
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/api/weather/location/${encodeURIComponent(city)}`
+      );
+      if (response.data) {
+        setDryBulbTemp(response.data.dryBulbTemp?.toFixed(1) || 'N/A');
+        setWetBulbTemp(response.data.wetBulbTemp?.toFixed(1) || 'N/A');
+      }
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      setDryBulbTemp('N/A');
+      setWetBulbTemp('N/A');
+    }
+  };
+
   // Pre-populate form if editing
   useEffect(() => {
     if (selectedProject) {
@@ -119,6 +139,10 @@ const InputPage = () => {
 
   // Handle Submit
   const handleSubmit = async () => {
+    // Fetch weather first
+    await fetchWeatherForCity();
+
+    // Then submit the form
     const projectData = {
       projectName,
       location: city,
@@ -137,26 +161,28 @@ const InputPage = () => {
 
     try {
       if (selectedProject?.id) {
-        // Update existing project
-        await axios.put(`${API_BASE_URL}/api/projects/${selectedProject.id}`, {
-          id: selectedProject.id,
-          ...projectData,
-        });
-        console.log('Updated project:', projectData);
+        await axios.put(
+          `${API_BASE_URL}/api/projects/${selectedProject.id}`,
+          projectData
+        );
       } else {
-        // Create new project
         await axios.post(`${API_BASE_URL}/api/projects`, projectData);
-        console.log('Created new project:', projectData);
       }
 
-      // Navigate back to ProjectsPage and trigger refresh
-      navigate('/projects', { state: { refresh: true } });
+      // Navigate with refresh flag
+      navigate('/projects', {
+        state: { refresh: true },
+        replace: true, // This prevents additional history entries
+      });
     } catch (err) {
       console.error('Submit failed:', err);
     }
   };
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
+    // Fetch weather first
+    await fetchWeatherForCity();
+
     try {
       // Validate essential inputs first
       if (!currentProject.area || isNaN(parseFloat(currentProject.area))) {
@@ -461,15 +487,15 @@ const InputPage = () => {
             <div className="image-row">
               <div className="image-container">
                 <img
-                  src="/assets/Capstone.webp"
-                  alt="Visualization 1"
+                  src={capstone1}
+                  alt="HVAC System Visualization"
                   className="output-image"
                 />
               </div>
               <div className="image-container">
                 <img
-                  src="/asserts/buildings-13-02675-g006-550.jpg"
-                  alt="Visualization 2"
+                  src={capstone2} // Use imported variable
+                  alt="Thermal Performance Analysis"
                   className="output-image"
                 />
               </div>
