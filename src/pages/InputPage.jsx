@@ -256,8 +256,25 @@ const InputPage = () => {
   return (
     <div className="input-page">
       {/* Error Modal Popup */}
-      {showErrorModal && (
+      {/* {showErrorModal && (
         <Modal message={errorMessage} onClose={closeErrorModal} />
+      )} */}
+
+      {showErrorModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            background: 'rgba(0,0,0,0.5)',
+            color: 'white',
+            padding: 20,
+            zIndex: 1000,
+          }}
+        >
+          <p>{errorMessage}</p>
+          <button onClick={closeErrorModal}>Close</button>
+        </div>
       )}
 
       <Header />
