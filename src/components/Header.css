@@ -1,0 +1,70 @@
+/* Header bar */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-bottom: 1px solid black;
+}
+
+.logo {
+  color: black;
+  font-size: 1rem;
+  padding: 0;
+  /* top/bottom: 0.25rem, left/right: 0.5rem */
+  line-height: 1;
+  /* Remove vertical spacing */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-around;
+  margin-left: 2rem;
+}
+
+/* Style individual buttons */
+.nav-buttons button {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Style Link to look like a button */
+.nav-button-link {
+  background-color: #ddd;
+  border: 1px solid transparent;
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover/focus styles for the link-button */
+.nav-button-link:hover,
+.nav-button-link:focus {
+  background-color: #eee;
+  border-color: #ccc;
+  outline: none;
+}

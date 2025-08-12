@@ -1,0 +1,36 @@
+.projects-table-container {
+  background-color: #f3f3f3;
+  /* light gray background */
+  padding: 2rem;
+  width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+/* Basic table styling */
+.projects-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+  font-size: 1rem;
+}
+
+/* Table header */
+.projects-table thead {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+/* Border around entire table and between rows/columns */
+.projects-table th,
+.projects-table td {
+  border: 1px solid black;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+/* Horizontal line between thead and tbody is already handled via border */
+.projects-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

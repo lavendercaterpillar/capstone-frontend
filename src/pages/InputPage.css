@@ -1,0 +1,324 @@
+/* GLOBAL RESET + BOX MODEL */
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure full height across devices */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/* Top-level layout */
+/* FLEX CONTAINER */
+.input-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* width: 100%; */
+}
+
+/* Main two-column layout */
+.main-content {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+/* Two-column layout for larger screens */
+@media (min-width: 768px) {
+  .input-panel {
+    flex: 1 1 45%;
+    max-width: 45%;
+    border-right: 1px solid #ddd;
+  }
+
+  .output-panel {
+    flex: 1 1 55%;
+    max-width: 55%;
+  }
+}
+
+/* Left: input Panel Styles */
+.input-panel {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex: 1 1 100%;
+  padding: 1rem;
+  border-right: none;
+  background-color: white;
+}
+
+.location-input-container {
+  background-color: white;
+  /* 1/4 of the input-panel or more */
+  height: 30%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.location-title {
+  color: rgb(130, 130, 130);
+  font-size: 0.9rem;
+  text-align: left;
+  /* margin for h3 in input panel */
+  margin: 0.25rem 0;
+  padding: 0;
+  font-size: 1.1rem;
+}
+
+.location-inner-box {
+  flex: 1;
+  background-color: white;
+  border-radius: 4px;
+  padding: 0.5rem;
+  align-items: flex-start;
+}
+
+.room-input-container {
+  background-color: white;
+  height: 55%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.room-title {
+  color: rgb(130, 130, 130);
+  font-size: 0.9rem;
+  text-align: left;
+  margin: 0.25rem 0;
+  padding: 0;
+  font-size: 1.1rem;
+}
+
+.room-inner-box {
+  flex: 1;
+  background-color: white;
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  /* Ensures left alignment */
+  align-items: flex-start;
+  /* Optional: space between label and input */
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.room-input-label {
+  font-weight: 500;
+  color: black;
+  display: block;
+  margin-bottom: 0.25rem;
+  /* Keep this to add space between label and input */
+}
+
+.room-text-input {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ddd;
+  font-size: 0.9rem;
+  color: black;
+  box-sizing: border-box;
+}
+
+.wall-section-title {
+  color: black;
+  /* font-weight: 1.1rem; */
+  font-size: 0.9rem;
+  text-align: left;
+  /* margin-top: 1rem; */
+  margin-bottom: 0.3rem;
+  padding: 0;
+}
+
+.wall-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+}
+
+/* Each label-input pair */
+.wall-input-pair {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.wall-input-label {
+  color: black;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.wall-text-input {
+  background-color: #ddd;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+  width: 100px;
+  /* fixed narrower input */
+  box-sizing: border-box;
+}
+
+
+/* Add hover/focus styles */
+.room-text-input:focus {
+  border-color: #888;
+  outline: none;
+  background-color: #eee;
+}
+
+/* Submit Button */
+.submit-button {
+  align-self: flex-end;
+  /* aligns button to the right end inside flex column */
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #005fa3;
+}
+
+
+/* Right: output panel */
+.output-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: white;
+}
+
+/* Panel gray inner box */
+.panel-inner-box {
+  background-color: #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  height: 100%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Output Panel Styles */
+.output-panel {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.image-display-section {
+  margin-bottom: 20px;
+}
+
+.image-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+}
+
+.output-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Results Section Styles */
+.report-content {
+  background-color: white;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  min-height: 100px;
+}
+
+.report-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  color: #7f8c8d;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 8px 0;
+}
+
+.result-row.highlight {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.result-label {
+  color: #555;
+}
+
+.result-value {
+  font-weight: 500;
+  color: #333;
+}
+
+.calculate-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.calculate-button {
+  padding: 10px 25px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.calculate-button:hover {
+  background-color: #45a049;
+}
