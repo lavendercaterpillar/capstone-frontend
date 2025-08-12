@@ -174,6 +174,7 @@ const InputPage = () => {
         replace: true,
       });
     } catch (err) {
+      console.error('API error response data:', err.response?.data);
       showError(
         'Failed to save project: ' +
           (err.response?.data?.message || err.message)
@@ -246,6 +247,7 @@ const InputPage = () => {
       setHeatingLoad(results.heating);
       setShowResults(true);
     } catch (error) {
+      console.error('API error response data:', err.response?.data);
       showError('Calculation error: ' + error.message);
     }
   };
