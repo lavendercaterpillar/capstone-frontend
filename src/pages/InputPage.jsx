@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import capstone1 from '../assets/Capstone1.jpg';
 import capstone2 from '../assets/capstone2.jpg';
+import Modal from '../components/Modal';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // const API_BASE_URL = 'http://localhost:8080';
@@ -34,6 +35,21 @@ const InputPage = () => {
   const [wetBulbTemp, setWetBulbTemp] = useState('');
   const [coolingLoad, setCoolingLoad] = useState(null);
   const [heatingLoad, setHeatingLoad] = useState(null);
+
+  // Show Error state
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
+  // Error Alerts
+  const showError = (msg) => {
+    setErrorMessage(msg);
+    setShowErrorModal(true);
+  };
+
+  const closeErrorModal = () => {
+    setShowErrorModal(false);
+    setErrorMessage('');
+  };
 
   // Populate form when editing
   useEffect(() => {
@@ -64,6 +80,66 @@ const InputPage = () => {
 
   // Handle form submit (no weather fetch for new projects)
   const handleSubmit = async () => {
+    // Validation: required fields
+    if (!projectName.trim()) {
+      showError('Please enter a project name.');
+      return;
+    }
+    if (!city.trim()) {
+      showError('Please enter a city.');
+      return;
+    }
+
+    // Validation: positive numbers for walls and windows
+    const fieldsToCheck = [
+      // Floor area can be zero or more (optional to check here if you want)
+      { label: 'Floor area', value: floorArea, checkPositive: true },
+      // Walls must be > 0
+      { label: 'North wall area', value: northWallArea, checkPositive: true },
+      { label: 'South wall area', value: southWallArea, checkPositive: true },
+      { label: 'East wall area', value: eastWallArea, checkPositive: true },
+      { label: 'West wall area', value: westWallArea, checkPositive: true },
+      // Windows can be zero or more
+      {
+        label: 'North window count',
+        value: northWindowCount,
+        checkPositive: false,
+      },
+      {
+        label: 'South window count',
+        value: southWindowCount,
+        checkPositive: false,
+      },
+      {
+        label: 'East window count',
+        value: eastWindowCount,
+        checkPositive: false,
+      },
+      {
+        label: 'West window count',
+        value: westWindowCount,
+        checkPositive: false,
+      },
+    ];
+
+    for (const field of fieldsToCheck) {
+      const numValue = Number(field.value);
+      if (isNaN(numValue)) {
+        showError(`${field.label} must be a number.`);
+        return;
+      }
+      if (field.checkPositive && numValue <= 0) {
+        showError(`${field.label} must be a positive number.`);
+        return;
+      }
+      if (!field.checkPositive && numValue < 0) {
+        showError(`${field.label} cannot be negative.`);
+        return;
+      }
+    }
+
+    // Prepare project data for API
+
     const projectData = {
       projectName,
       location: city,
@@ -95,21 +171,52 @@ const InputPage = () => {
         replace: true,
       });
     } catch (err) {
-      console.error('Submit failed:', err);
+      showError(
+        'Failed to save project: ' +
+          (err.response?.data?.message || err.message)
+      );
     }
   };
 
   const handleCalculate = () => {
     // Validate essential inputs first
     try {
-      if (!floorArea || isNaN(parseFloat(floorArea))) {
-        throw new Error('Floor area must be a valid number');
+      // Validate essential inputs first
+      if (
+        !floorArea ||
+        isNaN(parseFloat(floorArea)) ||
+        parseFloat(floorArea) <= 0
+      ) {
+        showError('Floor area must be a positive number.');
+        return;
       }
       if (!dryBulbTemp || isNaN(parseFloat(dryBulbTemp))) {
-        throw new Error('Dry bulb temperature must be a valid number');
+        showError('Dry bulb temperature must be a valid number.');
+        return;
       }
       if (!wetBulbTemp || isNaN(parseFloat(wetBulbTemp))) {
-        throw new Error('Wet bulb temperature must be a valid number');
+        showError('Wet bulb temperature must be a valid number.');
+        return;
+      }
+
+      // Validate walls and windows are positive or zero numbers
+      const numericFields = [
+        { label: 'North wall area', value: northWallArea },
+        { label: 'North window count', value: northWindowCount },
+        { label: 'South wall area', value: southWallArea },
+        { label: 'South window count', value: southWindowCount },
+        { label: 'East wall area', value: eastWallArea },
+        { label: 'East window count', value: eastWindowCount },
+        { label: 'West wall area', value: westWallArea },
+        { label: 'West window count', value: westWindowCount },
+      ];
+
+      for (const field of numericFields) {
+        const numValue = Number(field.value);
+        if (isNaN(numValue) || numValue < 0) {
+          showError(`${field.label} must be a positive number.`);
+          return;
+        }
       }
 
       // Prepare calculation inputs
@@ -136,12 +243,17 @@ const InputPage = () => {
       setHeatingLoad(results.heating);
       setShowResults(true);
     } catch (error) {
-      alert(`Calculation Error: ${error.message}`);
+      showError('Calculation error: ' + error.message);
     }
   };
 
   return (
     <div className="input-page">
+      {/* Error Modal Popup */}
+      {showErrorModal && (
+        <Modal message={errorMessage} onClose={closeErrorModal} />
+      )}
+
       <Header />
 
       {/* MAIN CONTENT */}
