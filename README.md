@@ -1,4 +1,4 @@
-# HVAC Design Application – API & Full Stack Setup
+# HVACLoadPro – API & Full Stack Setup
 
 ## Overview
 
