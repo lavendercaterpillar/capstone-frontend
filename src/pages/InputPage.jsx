@@ -42,6 +42,7 @@ const InputPage = () => {
 
   // Error Alerts
   const showError = (msg) => {
+    console.log('showError called with:', msg);
     setErrorMessage(msg);
     setShowErrorModal(true);
   };
