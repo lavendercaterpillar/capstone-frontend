@@ -139,9 +139,10 @@ const InputPage = () => {
     }
 
     // Prepare project data for API
+
     const projectData = {
-      projectName: projectName.trim(),
-      location: city.trim(),
+      projectName,
+      location: city,
       area: parseFloat(floorArea),
       northWallArea: parseFloat(northWallArea),
       northWindowCount: parseInt(northWindowCount),
