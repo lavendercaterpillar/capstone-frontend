@@ -90,50 +90,53 @@ const InputPage = () => {
       return;
     }
 
-    // Validation: positive numbers for walls and windows
-    const fieldsToCheck = [
-      // Floor area can be zero or more (optional to check here if you want)
-      { label: 'Floor area', value: floorArea, checkPositive: true },
-      // Walls must be > 0
-      { label: 'North wall area', value: northWallArea, checkPositive: true },
-      { label: 'South wall area', value: southWallArea, checkPositive: true },
-      { label: 'East wall area', value: eastWallArea, checkPositive: true },
-      { label: 'West wall area', value: westWallArea, checkPositive: true },
-      // Windows can be zero or more
-      {
-        label: 'North window count',
-        value: northWindowCount,
-        checkPositive: false,
-      },
-      {
-        label: 'South window count',
-        value: southWindowCount,
-        checkPositive: false,
-      },
-      {
-        label: 'East window count',
-        value: eastWindowCount,
-        checkPositive: false,
-      },
-      {
-        label: 'West window count',
-        value: westWindowCount,
-        checkPositive: false,
-      },
+    // Numeric fields validation:
+    const numericFields = [
+      { label: 'Floor area', value: floorArea },
+      { label: 'North wall area', value: northWallArea },
+      { label: 'South wall area', value: southWallArea },
+      { label: 'East wall area', value: eastWallArea },
+      { label: 'West wall area', value: westWallArea },
     ];
 
-    for (const field of fieldsToCheck) {
-      const numValue = Number(field.value);
-      if (isNaN(numValue)) {
-        showError(`${field.label} must be a number.`);
+    for (const field of numericFields) {
+      const val = field.value; // don't trim
+
+      // Check for empty (null, undefined, empty string)
+      if (val === '' || val === null || val === undefined) {
+        showError(`${field.label} cannot be empty.`);
         return;
       }
-      if (field.checkPositive && numValue <= 0) {
+
+      // Check positive number
+      const num = Number(val);
+      if (isNaN(num) || num <= 0) {
         showError(`${field.label} must be a positive number.`);
         return;
       }
-      if (!field.checkPositive && numValue < 0) {
-        showError(`${field.label} cannot be negative.`);
+    }
+
+    // Window count fields validation (no trim, convert to string only for regex test)
+    const windowFields = [
+      { label: 'North window count', value: northWindowCount },
+      { label: 'South window count', value: southWindowCount },
+      { label: 'East window count', value: eastWindowCount },
+      { label: 'West window count', value: westWindowCount },
+    ];
+
+    for (const field of windowFields) {
+      const val = String(field.value); // convert to string to check digits
+
+      if (val === '' || val === 'undefined' || val === 'null') {
+        showError(`${field.label} should be an integer.`);
+        return;
+      }
+
+      // Validate digits only with regex:
+      if (!/^\d+$/.test(val)) {
+        showError(
+          `${field.label} must be a non-negative integer (digits only).`
+        );
         return;
       }
     }
