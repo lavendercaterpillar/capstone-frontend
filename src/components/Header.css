@@ -2,26 +2,37 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 60px;
-  padding: 0.5rem 1rem;
-  background-color: white;
+  justify-content: center;
+  position: relative;
+  height: 100px;
+  /* increased height */
+  padding: 0.5rem 1.0rem;
+  background-color: rgba(217, 228, 232, 255);
   border-bottom: 1px solid black;
+  box-sizing: border-box;
 }
 
 .logo {
-  color: black;
-  font-size: 1rem;
+  position: absolute;
   padding: 0;
   /* top/bottom: 0.25rem, left/right: 0.5rem */
-  line-height: 1;
   /* Remove vertical spacing */
   overflow: hidden;
   text-overflow: ellipsis;
+  left: 1rem;
   display: flex;
   align-items: center;
   height: 100%;
 }
+
+.logo-img {
+  /* decrease size as needed */
+  height: 95px;
+  /* maintain aspect ratio */
+  width: auto;
+  border-radius: 20px;
+}
+
 
 /* Navigation buttons */
 .nav-buttons {
@@ -29,14 +40,21 @@
   border-radius: 4px;
   display: flex;
   flex-grow: 1;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
   margin-left: 2rem;
+  flex-grow: 0;
 }
 
 /* Style individual buttons */
 .nav-buttons button {
-  flex: 1;
-  margin: 0 0.5rem;
+  background-color: rgba(151, 180, 193, 1);
+  color: black;
+  flex: 0 0 auto;
+  width: 120px;
+  margin: 0 0.3rem;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
@@ -44,10 +62,11 @@
 
 /* Style Link to look like a button */
 .nav-button-link {
-  background-color: #ddd;
+  background-color: rgba(151, 180, 193, 1);
   border: 1px solid transparent;
-  flex: 1;
-  margin: 0 0.5rem;
+  flex: 0 0 auto;
+  width: 120px;
+  margin: 0 0.3rem;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   color: black;
@@ -57,14 +76,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 10px;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Hover/focus styles for the link-button */
 .nav-button-link:hover,
-.nav-button-link:focus {
-  background-color: #eee;
+.nav-button-link:focus,
+.nav-buttons button:hover,
+.nav-buttons button:focus {
+  background-color: rgba(151, 180, 193, 0.8);
+  /* slightly lighter on hover */
   border-color: #ccc;
   outline: none;
 }
