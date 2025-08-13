@@ -52,7 +52,19 @@ body,
   flex: 1 1 100%;
   padding: 1rem;
   border-right: none;
-  background-color: white;
+  background-color: rgba(217, 228, 232, 255);
+  border-radius: 12px;
+}
+
+
+/* Panel gray inner box */
+.panel-inner-box {
+  background-color: rgba(151, 180, 193, 1) !important;
+  border-radius: 6px;
+  padding: 1rem;
+  height: 100%;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 1);
+  border-radius: 12px;
 }
 
 .location-input-container {
@@ -64,6 +76,7 @@ body,
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  border-radius: 12px;
 }
 
 .location-title {
@@ -86,11 +99,12 @@ body,
 
 .room-input-container {
   background-color: white;
-  height: 55%;
+  height: 61%;
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
+  border-radius: 12px;
 }
 
 .room-title {
@@ -129,7 +143,7 @@ body,
   padding: 0.4rem 0.6rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #ddd;
+  background-color: rgba(151, 180, 193, 1);
   font-size: 0.9rem;
   color: black;
   box-sizing: border-box;
@@ -169,7 +183,7 @@ body,
 }
 
 .wall-text-input {
-  background-color: #ddd;
+  background-color: rgba(151, 180, 193, 1);
   color: black;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -194,7 +208,7 @@ body,
   /* aligns button to the right end inside flex column */
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: #0077cc;
+  background-color: rgba(151, 180, 193, 1);
   color: white;
   border: none;
   border-radius: 4px;
@@ -204,7 +218,7 @@ body,
 }
 
 .submit-button:hover {
-  background-color: #005fa3;
+  background-color: rgba(151, 180, 193, 0.5);
 }
 
 
@@ -216,14 +230,6 @@ body,
   background-color: white;
 }
 
-/* Panel gray inner box */
-.panel-inner-box {
-  background-color: #ddd;
-  border-radius: 6px;
-  padding: 1rem;
-  height: 100%;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
-}
 
 /* Output Panel Styles */
 .output-panel {
@@ -231,7 +237,7 @@ body,
   flex-direction: column;
   width: 40%;
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: rgba(217, 228, 232, 255);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -254,13 +260,25 @@ body,
 
 .output-image {
   width: 100%;
-  height: auto;
+  /* set a fixed height for all images */
+  height: 200px;
+  /* fills the container while cropping excess */
+  /* object-fit: cover; */
+  /* keeps full image visible, may add empty space */
+  object-fit: contain;
   margin-bottom: 10px;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  border: 1px;
+  border-radius: 12px;
 }
 
 /* Results Section Styles */
+.results-section h3 {
+  color: rgb(122, 157, 173);
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
 .report-content {
   background-color: white;
   padding: 15px;
@@ -278,6 +296,7 @@ body,
   border-radius: 4px;
   margin-bottom: 15px;
   color: #7f8c8d;
+  border-radius: 12px;
 }
 
 .result-row {
@@ -295,7 +314,7 @@ body,
 }
 
 .result-label {
-  color: #555;
+  color: rgba(151, 180, 193, 1);
 }
 
 .result-value {
@@ -317,6 +336,7 @@ body,
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s;
+  border-radius: 8px;
 }
 
 .calculate-button:hover {
