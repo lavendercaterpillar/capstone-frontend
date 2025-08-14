@@ -76,9 +76,9 @@ const ProjectsPage = () => {
 
       {/* Page-specific header */}
       <div className="projects-subheader">
-        <div className="logo">API LOGO</div>
-        <div className="title">Application Title</div>
-        <div className="logo ada-logo">ADA LOGO</div>
+        <div className="logo">API TITLE</div>
+        <div className="title">List of Projects</div>
+        <div className="logo ada-logo"></div>
       </div>
 
       <main className="projects-content">

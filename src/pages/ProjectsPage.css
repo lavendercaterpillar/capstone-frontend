@@ -5,7 +5,7 @@
   flex-direction: column;
   min-height: 100vh;
   font-family: sans-serif;
-  background-color: white;
+  background-color: rgba(151, 180, 193, 1);
 }
 
 /* Page-specific header */
@@ -15,8 +15,8 @@
   justify-content: space-between;
   /* spread logos and title */
   padding: 1rem 2rem;
-  border-bottom: 1px solid #ccc;
-  background-color: #f9f9f9;
+  border-bottom: 1px;
+  background-color: rgba(151, 180, 193, 1);
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -36,14 +36,16 @@
   flex-grow: 1;
   text-align: center;
   font-weight: bold;
-  font-size: 1.25rem;
-  color: #222;
+  font-size: 1.8rem;
+  color: rgba(252, 188, 31, 255)
 }
+
 
 /* Ensure this rule wins over other table styles */
 .projects-table tr.selected-row {
-  background-color: #cce5ff !important;
   /* light blue highlight */
+  /* background-color: #cce5ff !important; */
+  background-color: rgba(217, 228, 232, 255) !important;
   font-weight: bold;
 }
 
@@ -53,16 +55,16 @@
   padding: 1.5rem 2rem;
 }
 
-/* Fixed action buttons container */
+/* action buttons container */
 .project-buttons {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  background: white;
+  justify-content: center;
+  gap: 0.2rem;
+  background: rgba(217, 228, 232, 255);
   padding: 1rem 2rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -71,20 +73,26 @@
 /* Style buttons inside action container */
 .project-buttons button {
   /* all buttons take equal width */
-  flex: 1;
+  width: 100px;
+  /* spacing between buttons */
+  margin: 0 1.5rem;
+  flex: 0 0 auto;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   color: black;
   cursor: pointer;
   border: 1px solid #ccc;
-  background-color: #ddd;
+  background-color: rgba(151, 180, 193, 1);
   border-radius: 4px;
   transition: background-color 0.2s ease;
   text-align: center;
 }
 
-.project-buttons button:hover {
-  background-color: #eee;
+.project-buttons button:hover,
+.project-buttons button:focus {
+  background-color: rgba(169, 205, 221, 0.8);
+  border-color: #ccc;
+  outline: none;
 }
 
 
@@ -124,6 +132,8 @@
 }
 
 .search-popup input[type="text"] {
+  background-color: rgba(217, 228, 232, 255);
+  color: black;
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -135,8 +145,8 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   border: 1px solid #ccc;
-  background-color: #ddd;
-  color: black;
+  background-color: rgba(151, 180, 193, 1);
+  color: white;
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }
